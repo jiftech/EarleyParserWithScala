@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 /**
   * Created by jiftech on 16/10/30.
   */
@@ -25,7 +27,9 @@ object EarleyParser {
             posMap: Map[String, Pos] = Words.defaultPosMap,
             goal: Constituent = S): (Boolean, Chart) = {
 
+    @tailrec
     def parseRoutine(wordList: List[String], curPos: Int, finalPos: Int, chart: Chart): Chart = {
+      @tailrec
       def predict(curPos: Int, curChart: Chart): Chart = {
         val incompleteArcs = curChart.filter(_.isIncomplete)
         val newArcs =
@@ -54,6 +58,7 @@ object EarleyParser {
         }
       }
 
+      @tailrec
       def complete(curPos: Int, curChart: Chart): Chart = {
         val (completeArcs, incompleteArcs) = curChart.partition(_.isCompleted)
         val newArcs =

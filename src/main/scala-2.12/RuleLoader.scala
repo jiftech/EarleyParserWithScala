@@ -25,18 +25,15 @@ object RuleLoader {
   }
 
   private def constructRule(strLhs: String, strRhss: Seq[String], lineNum: Int): Rule = {
-    def getRhs(optionalCnstList: Seq[Option[Constituent]]) = getRhsBody(optionalCnstList, Some(Seq.empty[Constituent]))
-    def getRhsBody(optionalCnstList: Seq[Option[Constituent]], rhs: Option[Seq[Constituent]]): Option[Seq[Constituent]] = {
-      (optionalCnstList, rhs) match {
-        case (Some(cnst) :: Nil, Some(rhsSeq)) => Some(rhsSeq :+ cnst)
-        case (Some(cnst) :: rest, Some(rhsSeq)) => getRhsBody(rest, Some(rhsSeq :+ cnst))
-        case (None :: _, _) => None
-      }
+    def getRhs(optionalCnstList: Seq[Option[Constituent]]): Option[Seq[Constituent]] = {
+      if (optionalCnstList.contains(None)) None
+      else Some(optionalCnstList.flatMap(identity(_)))
     }
-    val lhs = getPhraseByName(strLhs)
-    val rhs = getRhs(strRhss.map(strRhs => getCnstByName(strRhs)))
 
-    (lhs, rhs) match {
+    val lhso = getPhraseByName(strLhs)
+    val rhso = getRhs(strRhss.map(strRhs => getCnstByName(strRhs)))
+
+    (lhso, rhso) match {
       case (Some(lhs), Some(rhs)) => Rule(lhs, rhs)
       case (None, None) => sys.error("句構造規則読み込みエラー: 左辺、右辺の両方に誤りがある規則があります" + lineNumStr(lineNum))
       case (None, _) => sys.error("句構造規則読み込みエラー: 左辺に誤りがある規則があります" + lineNumStr(lineNum))
@@ -65,9 +62,9 @@ object RuleLoader {
   }
 
   private def constructPosMap(strPos: String, word: String, lineNum: Int): (String, Pos) = {
-    val pos = getPosByName(strPos)
+    val poso = getPosByName(strPos)
 
-    pos match {
+    poso match {
       case Some(pos) => word -> pos
       case None => sys.error("品詞一覧読み込みエラー: 左辺の品詞名に誤りがあります" + lineNumStr(lineNum))
     }
