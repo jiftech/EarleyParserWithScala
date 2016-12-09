@@ -1,5 +1,7 @@
 Det -> the
 Noun -> waiter
 Noun -> meal
+Noun -> day
 Verb -> brought
 Verb -> slept
+Prep -> of

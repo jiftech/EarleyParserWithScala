@@ -703,9 +703,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-agent;0.13.8!test-agent.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
-[debug] :: resolution report :: resolve 629ms :: artifacts dl 18ms
+[debug] :: resolution report :: resolve 605ms :: artifacts dl 12ms
 [debug] 	report for default#earleyparser$sbt_2.12;1.0 default produced in /home/jiftech/IntelliJIDEAProjects/EarleyParser/target/resolution-cache/reports/default-earleyparser$sbt_2.12-default.xml
-[debug] 	resolve done (629ms resolve - 18ms download)
+[debug] 	resolve done (605ms resolve - 12ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: default#earleyparser$sources_2.12;1.0
 [debug] 	confs: [default]
@@ -1069,6 +1069,6 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_8_2;0.13.8!precompiled-2_8_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_2;0.13.8!precompiled-2_9_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_3;0.13.8!precompiled-2_9_3.jar(src)
-[debug] :: resolution report :: resolve 88ms :: artifacts dl 15ms
+[debug] :: resolution report :: resolve 63ms :: artifacts dl 12ms
 [debug] 	report for default#earleyparser$sources_2.12;1.0 default produced in /home/jiftech/IntelliJIDEAProjects/EarleyParser/target/resolution-cache/reports/default-earleyparser$sources_2.12-default.xml
-[debug] 	resolve done (88ms resolve - 15ms download)
+[debug] 	resolve done (63ms resolve - 12ms download)

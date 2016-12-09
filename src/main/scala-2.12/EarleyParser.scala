@@ -1,5 +1,8 @@
+import Constituents._
+
 import scala.annotation.tailrec
 
+// TODO: テストを書く
 /**
   * Created by jiftech on 16/10/30.
   */
@@ -33,7 +36,7 @@ object EarleyParser {
       def predict(curPos: Int, curChart: Chart): Chart = {
         val incompleteArcs = curChart.filter(_.isIncomplete)
         val newArcs =
-          for{
+          for {
             arc <- incompleteArcs
             rule <- rules if arc.nextConstituent == rule.lhs
           } yield Arc(rule.lhs, Nil, rule.rhs, curPos, curPos)
@@ -49,11 +52,11 @@ object EarleyParser {
         val next::rest = wordList
 
         posMap.get(next) match {
-          case Some(posOfNext) => {
+          case Some(posOfNext) =>
             if(chart.exists(arc => !arc.isCompleted && arc.nextConstituent == posOfNext))
               (rest, chart + Arc(posOfNext, List(Word(next)), Nil, curPos, nextPos))
             else (rest, chart)
-          }
+
           case None => sys.error("単語リストにない単語が文中にあるため、解析に失敗しました")
         }
       }
@@ -63,8 +66,8 @@ object EarleyParser {
         val (completeArcs, incompleteArcs) = curChart.partition(_.isCompleted)
         val newArcs =
           for {
-            compArc <- completeArcs
-            incompArc <- incompleteArcs if incompArc.nextConstituent == compArc.lhs
+            compArc <- completeArcs if compArc.end == curPos
+            incompArc <- incompleteArcs if (incompArc.nextConstituent == compArc.lhs && incompArc.end == compArc.start)
           } yield Arc(incompArc.lhs, incompArc.completed :+ incompArc.nextConstituent, incompArc.incomplete.tail, incompArc.start, curPos)
 
         val nextChart = curChart ++ newArcs
@@ -91,17 +94,19 @@ object EarleyParser {
 }
 
 object Main extends App {
-  val statement = "the waiter slept"
+  val statement = "the meal of the day"
   val rules = RuleLoader.loadRules("src/main/resources/rules.txt")
   val posMap = RuleLoader.loadPosMap("src/main/resources/posmap.txt")
 
+  println("Statement to be parsed: \"" + statement + "\"")
   println("Rules:")
   rules.foreach(r => println("\t" + r))
   println("Pos Map:")
   posMap.foreach(w => println("\t" + w))
 
-  val (result, finalChart) = EarleyParser.parse(statement, rules, posMap)
+  val (result, finalChart) = EarleyParser.parse(statement, rules, posMap, NP)
 
-  if(result) println("parse succeeded: " + finalChart)
-  else println("parse failed: " + finalChart)
+  if(result) println("parse succeeded:")
+  else println("parse failed:")
+  finalChart foreach println
 }

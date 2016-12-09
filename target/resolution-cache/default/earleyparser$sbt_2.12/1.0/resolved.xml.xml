@@ -4,7 +4,7 @@
 		module="earleyparser$sbt_2.12"
 		revision="1.0"
 		status="integration"
-		publication="20161103115339"
+		publication="20161209005224"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>

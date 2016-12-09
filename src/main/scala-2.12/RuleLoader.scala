@@ -27,7 +27,7 @@ object RuleLoader {
   private def constructRule(strLhs: String, strRhss: Seq[String], lineNum: Int): Rule = {
     def getRhs(optionalCnstList: Seq[Option[Constituent]]): Option[Seq[Constituent]] = {
       if (optionalCnstList.contains(None)) None
-      else Some(optionalCnstList.flatMap(identity(_)))
+      else Some(optionalCnstList.flatten)
     }
 
     val lhso = getPhraseByName(strLhs)

@@ -4,7 +4,7 @@
 		module="earleyparser$sources_2.12"
 		revision="1.0"
 		status="integration"
-		publication="20161103115340"
+		publication="20161209005225"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
